@@ -6,6 +6,8 @@ const multer = require('multer');
 
 //routes
 const userRoutes = require('./routes/users');
+const chatRoutes = require('./routes/chats');
+const messageRoutes = require('./routes/messages');
 
 //express app
 const app = express();
@@ -21,6 +23,8 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/users',userRoutes);
+app.use('/api/chats',chatRoutes);
+app.use('/api/messages',messageRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)
