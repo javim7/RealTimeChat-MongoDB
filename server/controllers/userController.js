@@ -26,7 +26,7 @@ const getUser = async (req, res) => {
 
 //create new user
 const createUser = async (req, res) => {
-    const {email, password, name, age} = req.body;
+    const {name, email, username, password} = req.body;
 
     //add to db
     try {
