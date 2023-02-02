@@ -32,6 +32,23 @@ const getUser = async (req, res) => {
     res.status(200).json(user)
 }
 
+//get single email for new chat
+const getUserEmail = async (req, res) => {
+    const { email } = req.params
+
+    const user = await User.findOne({ email: email })
+
+    if (!user) {
+
+        console.log('[userController.js] getUser: ', user)
+
+        return res.status(404).json({ error: 'Correo incorrecto!' })
+    }
+
+    console.log('[userController.js] getEmail: ', user)
+    res.status(200).json(user)
+}
+
 //create new user
 const createUser = async (req, res) => {
     const { name, email, username, password } = req.body;
@@ -86,5 +103,6 @@ module.exports = {
     getUsers,
     getUser,
     deleteUser,
-    updateUser
+    updateUser,
+    getUserEmail
 }

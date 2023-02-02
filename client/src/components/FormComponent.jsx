@@ -23,6 +23,7 @@ const FormComponent = ({ setFormEmail }) => {
 
     // USESTATE DE ERROR
     const [errorCorreo, setErrorCorreo] = useState(false);
+    const [errorRegistro, setErrorRegistro] = useState(false);
 
     const HandleLoggin = async () => {
 
@@ -41,7 +42,32 @@ const FormComponent = ({ setFormEmail }) => {
     }
 
     const HandleRegister = () => {
-        console.log(emailRegister);
+        let databody = {
+            "name": nombreRegister,
+            "email": emailRegister,
+            "username": usernameRegister,
+            "password": passwordRegister
+        }
+
+        fetch('http://localhost:5000/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(databody)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.name === undefined || data.email === undefined || data.username === undefined || data.password === undefined) {
+                    setErrorRegistro(true);
+                }
+                // console.log(data.email);    
+                setFormEmail(data.email);
+                // console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     return (
@@ -74,47 +100,54 @@ const FormComponent = ({ setFormEmail }) => {
                         type="submit"
                         onClick={() => { HandleLoggin() }}
                     >Submit</button>
-                    <Text c="blue" onClick={switchForm} className="links_forms">Create an account</Text>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Text c="black" style={{ marginRight: '10px' }} className="unlinks_forms">Don't have an account already? </Text>
+                        <Text c="blue" onClick={switchForm} className="links_forms">Create one</Text>
+                    </div>
                 </div>
             ) : (
                 <div className="form">
                     <h2>Register</h2>
                     <div className="form-group">
                         <label className="label_form" htmlFor="name">Nombre</label>
-                        <input
+                        <TextInput
                             className="input_form"
                             type="text"
                             id="name"
+                            error={errorRegistro ? " " : undefined}
                             onChange={(evento => {
                                 setNombreRegister(evento.target.value);
                             })} />
                     </div>
                     <div className="form-group">
                         <label className="label_form" htmlFor="email">Email:</label>
-                        <input
+                        <TextInput
                             className="input_form"
                             type="email"
                             id="email"
+                            error={errorRegistro ? " " : undefined}
                             onChange={(evento) => {
                                 setEmailRegister(evento.target.value);
                             }} />
                     </div>
                     <div className="form-group">
                         <label className="label_form" htmlFor="username">Username:</label>
-                        <input
+                        <TextInput
                             className="input_form"
                             type="text"
                             id="username"
+                            error={errorRegistro ? " " : undefined}
                             onChange={(evento) => {
                                 setUsernameRegister(evento.target.value);
                             }} />
                     </div>
                     <div className="form-group">
                         <label className="label_form" htmlFor="password">Password:</label>
-                        <input
+                        <TextInput
                             className="input_form"
                             type="password"
                             id="password"
+                            error={errorRegistro ? "Todos los campos son obligatorios" : undefined}
                             onChange={(evento) => {
                                 setPasswordRegister(evento.target.value);
                             }} />
@@ -124,7 +157,10 @@ const FormComponent = ({ setFormEmail }) => {
                         type="submit"
                         onClick={() => { HandleRegister() }}
                     >Submit</button>
-                    <Text c="blue" onClick={switchForm} className="links_forms">Loggin</Text>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Text c="black" style={{ marginRight: '10px' }} className="unlinks_forms">Already have an account? </Text>
+                        <Text c="blue" onClick={switchForm} className="links_forms">Login</Text>
+                    </div>
                 </div>
             )}
         </div>

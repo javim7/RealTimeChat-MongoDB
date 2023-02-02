@@ -6,7 +6,8 @@ const {
     getUsers,
     getUser,
     deleteUser,
-    updateUser
+    updateUser,
+    getUserEmail
 } = require('../controllers/userController')
 
 const router = express.Router();
@@ -14,8 +15,11 @@ const router = express.Router();
 //get all users
 router.get('/', getUsers)
 
-//get a single user
+//get a single user login
 router.get('/:email/:password', getUser)
+
+//get a single user email
+router.get('/:email', getUserEmail)
 
 //post a new user
 router.post('/', createUser)
