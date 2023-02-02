@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text } from '@mantine/core';
 import "../styles/form_style.css";
 
-const FormComponent = () => {
+const FormComponent = ({ setFormEmail }) => {
     const [form, setForm] = useState("register");
 
     const switchForm = () => {
@@ -24,8 +24,33 @@ const FormComponent = () => {
     // USESTATE DONDE SE ALMACENAN LOS DATOS DEL USUARIO LOGEADO
     const [user, setUser] = useState({});
 
-    const HandleLoggin = async = () => {
-        console.log(emailLogin);
+    const HandleLoggin = async () => {
+
+        // const response = await fetch("http://localhost:5000/api/users/" + emailLogin + "/" + passwordLogin);
+
+        // if (response.ok) {
+        //     const data = await response.json();
+        //     console.log(data)
+        // }
+        // else {
+        //     console.log(response);
+        // }
+
+
+
+
+
+        fetch("http://localhost:5000/api/users/" + emailLogin + "/" + passwordLogin)
+            .then(response => response.json())
+            .then(data => {
+                setFormEmail(data.email);
+                // console.log(data.email);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+
     }
 
     const HandleRegister = () => {

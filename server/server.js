@@ -15,6 +15,7 @@ const cors = require('cors');
 
 //middleware
 app.use(express.json())
+app.use(cors());
 
 app.use((req, res, next) => {
     console.log(req.path, req.method);
@@ -22,13 +23,13 @@ app.use((req, res, next) => {
 })
 
 //routes
-app.use('/api/users',userRoutes);
-app.use('/api/chats',chatRoutes);
-app.use('/api/messages',messageRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/chats', chatRoutes);
+app.use('/api/messages', messageRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)
-    .then(() =>{
+    .then(() => {
         //listen for request
         app.listen(process.env.PORT, () => {
             console.log('connected to db and listening on port', process.env.PORT)
