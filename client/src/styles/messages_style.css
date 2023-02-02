@@ -44,7 +44,9 @@
 
     align-self: flex-end;
 
-    background-color: #43b7d4;
+    background-color: #94def1;
+    /* background-color: #43b7d4; */
+
 
 }
 
@@ -61,5 +63,14 @@
     justify-content: center;
 
     /* align-items: center; */
+
+}
+
+.mensaje_individual_div {
+
+    display: flex;
+
+    flex-direction: column;
+
 
 }

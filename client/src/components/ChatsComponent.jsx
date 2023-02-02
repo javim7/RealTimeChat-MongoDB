@@ -1,5 +1,7 @@
 import { Text, Paper, Divider, Input, ScrollArea } from '@mantine/core';
 
+import MensajeComponent from './MensajeComponent';
+
 function ChatComponent() {
     return (
 
@@ -8,75 +10,18 @@ function ChatComponent() {
             <ScrollArea style={{ bottom: '10px' }} >
                 <div className='ChatsArea'>
 
-                    <Paper
-                        shadow="xl"
-                        radius="lg"
-                        p="md"
-                        className='mensaje_individual received'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
+                    <MensajeComponent
+                        tipo='received'
+                        mensaje='Esto es una prueba de un mensaje siendo un reciever y quiero extender un poco mas el texto para ver el segundo.'
+                        fecha='12/24/2023'
+                    />
 
-                    <Paper
-                        shadow="xl"
-                        radius="lg"
-                        p="md"
-                        className='mensaje_individual received'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
+                    <MensajeComponent
+                        tipo='sent'
+                        mensaje='Esto es una prueba de un mensaje siendo un sender.'
+                        fecha='12/24/2023'
+                    />
 
-                    <Paper
-                        shadow="xl"
-                        radius="lg"
-                        p="md"
-                        className='mensaje_individual received'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
-
-
-
-                    <Paper shadow="xl" radius="lg" p="md" className='mensaje_individual sent'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
-
-                    <Paper shadow="xl" radius="lg" p="md" className='mensaje_individual received'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
-
-                    <Paper shadow="xl" radius="lg" p="md" className='mensaje_individual received'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
-
-                    <Paper shadow="xl" radius="lg" p="md" className='mensaje_individual sent'>
-                        <Text>Paper is the most basic ui component</Text>
-                        <Text>
-                            Use it to create cards, dropdowns, modals and other components that require background
-                            with shadow
-                        </Text>
-                    </Paper>
 
                 </div>
             </ScrollArea>

@@ -15,8 +15,6 @@ function App() {
 
   return (
     <div>
-
-
       <AppShell padding="md" navbar={<NavbarComponent />}>
         <ChatComponent />
       </AppShell>
