@@ -27,10 +27,8 @@ const getChat = async (req, res) => {
 //create new chat
 const createChat = async (req, res) => {
     const {user1, user2, messages} = req.body;
-    console.log(req.body)
     //add to db
     try {
-        console.log("entro")
         const chat = await Chat.create({user1, user2, messages})
         res.status(200).json(chat)
     } catch (error) {
