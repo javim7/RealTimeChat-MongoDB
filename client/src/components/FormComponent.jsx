@@ -9,7 +9,6 @@ const FormComponent = () => {
         setForm(form === "login" ? "register" : "login");
     };
 
-
     // USESTATES DE REGISTER
 
     const [nombreRegister, setNombreRegister] = useState("");
@@ -22,7 +21,10 @@ const FormComponent = () => {
     const [emailLogin, setEmailLogin] = useState("");
     const [passwordLogin, setPasswordLogin] = useState("");
 
-    const HandleLoggin = () => {
+    // USESTATE DONDE SE ALMACENAN LOS DATOS DEL USUARIO LOGEADO
+    const [user, setUser] = useState({});
+
+    const HandleLoggin = async = () => {
         console.log(emailLogin);
     }
 
@@ -33,7 +35,7 @@ const FormComponent = () => {
     return (
         <div className="form-container">
             {form === "login" ? (
-                <form className="form">
+                <div className="form">
                     <h2>Login</h2>
                     <div className="form-group">
                         <label className="label_form" htmlFor="email">Email:</label>
@@ -59,9 +61,9 @@ const FormComponent = () => {
                         onClick={() => { HandleLoggin() }}
                     >Submit</button>
                     <Text c="blue" onClick={switchForm} className="links_forms">Create an account</Text>
-                </form>
+                </div>
             ) : (
-                <form className="form">
+                <div className="form">
                     <h2>Register</h2>
                     <div className="form-group">
                         <label className="label_form" htmlFor="name">Nombre</label>
@@ -109,7 +111,7 @@ const FormComponent = () => {
                         onClick={() => { HandleRegister() }}
                     >Submit</button>
                     <Text c="blue" onClick={switchForm} className="links_forms">Loggin</Text>
-                </form>
+                </div>
             )}
         </div>
     );
