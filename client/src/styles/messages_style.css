@@ -1,0 +1,65 @@
+.chats_component_area {
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin: 0;
+
+}
+
+.ChatsArea {
+
+    display: flex;
+
+    flex-direction: column;
+
+    height: 90vh;
+
+    bottom: 100px;
+
+}
+
+.scrollArea {
+    display: flex;
+}
+
+.mensaje_individual {
+
+    margin-top: 15px;
+
+    width: 70%;
+
+}
+
+.received {
+
+    align-self: flex-start;
+
+}
+
+.sent {
+
+    align-self: flex-end;
+
+    background-color: #43b7d4;
+
+}
+
+.input_chat_area {
+
+    /* background-color: red; */
+
+    height: 5vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    /* align-items: center; */
+
+}
