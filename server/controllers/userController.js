@@ -16,7 +16,8 @@ const getUser = async (req, res) => {
     //     return res.status(404).json({error: 'Invalid ID'})
     // }
 
-    const user = await User.findById(email)
+    console.log(email);
+    const user = await User.findOne({ email: email })
 
     if (!user) {
         return res.status(404).json({ error: 'email not found' })
