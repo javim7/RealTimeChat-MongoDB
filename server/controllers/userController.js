@@ -8,19 +8,19 @@ const getUsers = async (req, res) => {
     res.status(200).json(users)
 }
 
-//get single user
+//get login information
 const getUser = async (req, res) => {
-    const { email } = req.params
-
-    // if(!mongoose.Types.ObjectId.isValid(id)) {
-    //     return res.status(404).json({error: 'Invalid ID'})
-    // }
+    const { email, password } = req.params
 
     console.log(email);
-    const user = await User.findOne({ email: email })
+    console.log(password);
+    const user = await User.findOne({
+        email: email,
+        password: password
+    })
 
     if (!user) {
-        return res.status(404).json({ error: 'email not found' })
+        return res.status(404).json({ error: 'Credenciales incorrectas!' })
     }
     res.status(200).json(user)
 }

@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/', getUsers)
 
 //get a single user
-router.get('/:email', getUser)
+router.get('/:email/:password', getUser)
 
 //post a new user
 router.post('/', createUser)
