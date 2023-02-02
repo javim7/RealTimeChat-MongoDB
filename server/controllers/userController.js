@@ -3,25 +3,32 @@ const mongoose = require('mongoose');
 
 //get all users
 const getUsers = async (req, res) => {
+
     const users = await User.find({}).sort({ createdAt: -1 });
+
+    console.log('[userController.js] getUsers: ', users)
 
     res.status(200).json(users)
 }
 
 //get login information
 const getUser = async (req, res) => {
+
     const { email, password } = req.params
 
-    console.log(email);
-    console.log(password);
     const user = await User.findOne({
         email: email,
         password: password
     })
 
     if (!user) {
+
+        console.log('[userController.js] getUser: ', user)
+
         return res.status(404).json({ error: 'Credenciales incorrectas!' })
     }
+
+    console.log('[userController.js] getUser: ', user)
     res.status(200).json(user)
 }
 

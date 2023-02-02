@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text } from '@mantine/core';
+import React, { useEffect, useState } from "react";
+import { Text, TextInput } from '@mantine/core';
 import "../styles/form_style.css";
 
 const FormComponent = ({ setFormEmail }) => {
@@ -21,35 +21,22 @@ const FormComponent = ({ setFormEmail }) => {
     const [emailLogin, setEmailLogin] = useState("");
     const [passwordLogin, setPasswordLogin] = useState("");
 
-    // USESTATE DONDE SE ALMACENAN LOS DATOS DEL USUARIO LOGEADO
-    const [user, setUser] = useState({});
+    // USESTATE DE ERROR
+    const [errorCorreo, setErrorCorreo] = useState(false);
 
     const HandleLoggin = async () => {
-
-        // const response = await fetch("http://localhost:5000/api/users/" + emailLogin + "/" + passwordLogin);
-
-        // if (response.ok) {
-        //     const data = await response.json();
-        //     console.log(data)
-        // }
-        // else {
-        //     console.log(response);
-        // }
-
-
-
-
 
         fetch("http://localhost:5000/api/users/" + emailLogin + "/" + passwordLogin)
             .then(response => response.json())
             .then(data => {
                 setFormEmail(data.email);
-                // console.log(data.email);
+                if (data.email === undefined) {
+                    setErrorCorreo(true);
+                }
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
             });
-
 
     }
 
@@ -64,20 +51,22 @@ const FormComponent = ({ setFormEmail }) => {
                     <h2>Login</h2>
                     <div className="form-group">
                         <label className="label_form" htmlFor="email">Email:</label>
-                        <input
+                        <TextInput
                             className="input_form"
                             type="email"
                             id="email"
                             onChange={(evento) => { setEmailLogin(evento.target.value) }}
+                            error={errorCorreo ? "Credenciales incorrectos" : undefined}
                         />
                     </div>
                     <div className="form-group">
                         <label className="label_form" htmlFor="password">Password:</label>
-                        <input
+                        <TextInput
                             className="input_form"
                             type="password"
                             id="password"
                             onChange={(evento) => { setPasswordLogin(evento.target.value) }}
+                            error={errorCorreo ? " " : undefined}
                         />
                     </div>
                     <button

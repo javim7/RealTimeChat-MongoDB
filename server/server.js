@@ -9,6 +9,9 @@ const userRoutes = require('./routes/users');
 const chatRoutes = require('./routes/chats');
 const messageRoutes = require('./routes/messages');
 
+// ignorar warning:
+mongoose.set("strictQuery", false);
+
 //express app
 const app = express();
 const cors = require('cors');
@@ -18,7 +21,9 @@ app.use(express.json())
 app.use(cors());
 
 app.use((req, res, next) => {
-    console.log(req.path, req.method);
+    console.log('')
+    console.log('[server.js] Se ha accedido a la ruta: ', req.path)
+    console.log('[server.js] Con el método: ', req.method)
     next();
 })
 
@@ -32,11 +37,11 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         //listen for request
         app.listen(process.env.PORT, () => {
-            console.log('connected to db and listening on port', process.env.PORT)
+            console.log('[server.js] Conetado a la base de datos y escuchando en el puerto: ', process.env.PORT)
         });
     })
     .catch((error) => {
-        console.log('error connecting to db', error)
+        console.log('[server.js] Error al conectar con la base de datos: ', error)
     })
 
 

@@ -15,16 +15,18 @@ function App() {
 
   const [formEmail, setFormEmail] = useState(undefined);
 
-  useEffect(() => {
-    console.log('Se ha loggeado con el email: ' + formEmail);
-  }, [formEmail]);
-
   return (
     <div>
 
-      {formEmail === undefined ? <FormComponent setFormEmail={setFormEmail} /> : <AppShell padding="md" navbar={<NavbarComponent />}>
-        <ChatComponent />
-      </AppShell>}
+      {
+        formEmail === undefined
+          ?
+          <FormComponent setFormEmail={setFormEmail} />
+          :
+          <AppShell padding="md" navbar={<NavbarComponent />}>
+            <ChatComponent />
+          </AppShell>
+      }
 
 
 
