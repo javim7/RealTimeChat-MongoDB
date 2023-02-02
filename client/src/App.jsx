@@ -7,17 +7,18 @@ import './styles/chats_navbar_style.css'
 import './styles/messages_style.css'
 import './styles/appshell_style.css'
 
-
 import NavbarComponent from './components/NavbarComponent';
 import ChatComponent from './components/ChatsComponent';
+import FormComponent from './components/FormComponent';
 
 function App() {
 
   return (
     <div>
-      <AppShell padding="md" navbar={<NavbarComponent />}>
+      {/* <AppShell padding="md" navbar={<NavbarComponent />}>
         <ChatComponent />
-      </AppShell>
+      </AppShell> */}
+      <FormComponent />
     </div>
 
   );
