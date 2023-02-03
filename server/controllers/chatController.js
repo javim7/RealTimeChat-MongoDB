@@ -8,11 +8,45 @@ const getChats = async (req, res) => {
     res.status(200).json(chats)
 }
 
+//get allnavbar chats previous given an email
+
 //get all chats where sender is email
 const getChatsSender = async (req, res) => {
     const { email } = req.params
     console.log(email);
-    const chats = await Chat.find({ $or: [{ user1: email }, { user2: email }] }).sort({ createdAt: -1 });
+    const chats = await Chat.aggregate([
+        {
+            $match: {
+                $or: [{ user1: email }, { user2: email }]
+            }
+        },
+        {
+            $project: {
+                otherUser: {
+                    $cond: [{ $eq: ["$user1", email] }, "$user2", "$user1"]
+                }
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "otherUser",
+                foreignField: "email",
+                as: "otherUserInfo"
+            }
+        },
+        {
+            $unwind: "$otherUserInfo"
+        },
+        {
+            $project: {
+                _id: 0,
+                email: "$otherUser",
+                name: "$otherUserInfo.name"
+            }
+        }
+    ]);
+
 
     res.status(200).json(chats)
 }
