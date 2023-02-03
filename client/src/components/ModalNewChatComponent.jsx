@@ -17,8 +17,10 @@ function ModalNewChatComponent({ opened, setOpened, formEmail }) {
                 if (data.error) {
                     setErrorCorreo(true);
                 }
-                postMessage();
-                setOpened(false)
+                else {
+                    postMessage();
+                    setOpened(false)
+                }
             })
     }
 
@@ -26,11 +28,11 @@ function ModalNewChatComponent({ opened, setOpened, formEmail }) {
         let databody = {
             "user1": formEmail,
             "user2": destinatario,
-            "message": {
+            "messages": [{
                 "sender": formEmail,
                 "receiver": destinatario,
                 "message": mensaje
-            }
+            }]
         }
 
         fetch('http://localhost:5000/api/chats', {

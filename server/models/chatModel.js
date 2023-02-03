@@ -13,7 +13,7 @@ const chatSchema = new Schema({
         required: true
     },
     messages: {
-        type: [Message.messagesSchema]
+        type: [Message.schema]
     }
 
 }, { timestamps: true })

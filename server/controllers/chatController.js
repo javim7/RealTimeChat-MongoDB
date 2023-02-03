@@ -103,17 +103,27 @@ const getChat = async (req, res) => {
 
 //create new chat
 const createChat = async (req, res) => {
-    const { user1, user2, messages } = req.body;
-
-    console.log("chatController.js");
-    console.log("[server.js] con el metodo: POST");
+    const { user1, user2, messages, sender, reciever, message } = req.body;
     console.log(req.body);
+    const item = {
+        user1: user1,
+        user2: user2,
+        messages: [
+            {
+                sender: user1,
+                receiver: user2,
+                message: messages[0].message
+            }
+        ]
+
+    }
+    console.log(item);
     //add to db
     try {
-        const chat = await Chat.create({ user1, user2, messages })
+        const chat = await Chat.create(item)
         res.status(200).json(chat)
     } catch (error) {
-        res.status(400).json({ error: error.chat })
+        res.status(400).json({ error: error.message })
     }
 }
 
