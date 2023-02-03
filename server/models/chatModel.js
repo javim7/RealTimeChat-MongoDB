@@ -12,10 +12,10 @@ const chatSchema = new Schema({
         type: String,
         required: true
     },
-    messages:{
-        type: [Message.schema]
+    messages: {
+        type: [Message.messagesSchema]
     }
-    
-}, {timestamps: true})
+
+}, { timestamps: true })
 
 module.exports = mongoose.model('Chat', chatSchema);

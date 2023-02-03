@@ -8,9 +8,43 @@ const getChats = async (req, res) => {
     res.status(200).json(chats)
 }
 
-//get allnavbar chats previous given an email
+//get all messages between 2 emails
+const getConversations = async (req, res) => {
+    const { user, email } = req.params
+    console.log('[chatController.js] getConversations');
+    console.log(user);
+    console.log(email);
+    console.log(req.params);
+    const chats = await Chat.aggregate([
+        {
+            $match: {
+                $or: [
+                    { user1: { $in: [user, email] }, user2: { $in: [user, email] } },
+                ]
+            }
+        },
+        {
+            $unwind: "$messages"
+        },
+        {
+            $sort: {
+                "messages.createdAt": 1
+            }
+        },
+        {
+            $group: {
+                _id: "$_id",
+                messages: {
+                    $push: "$messages"
+                }
+            }
+        }
+    ]);
+    res.status(200).json(chats)
+}
 
-//get all chats where sender is email
+
+//get allnavbar chats previous given an email
 const getChatsSender = async (req, res) => {
     const { email } = req.params
     console.log(email);
@@ -70,6 +104,10 @@ const getChat = async (req, res) => {
 //create new chat
 const createChat = async (req, res) => {
     const { user1, user2, messages } = req.body;
+
+    console.log("chatController.js");
+    console.log("[server.js] con el metodo: POST");
+    console.log(req.body);
     //add to db
     try {
         const chat = await Chat.create({ user1, user2, messages })
@@ -121,5 +159,6 @@ module.exports = {
     getChat,
     deleteChat,
     updateChat,
-    getChatsSender
+    getChatsSender,
+    getConversations
 }

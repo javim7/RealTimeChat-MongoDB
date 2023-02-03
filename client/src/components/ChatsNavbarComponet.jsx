@@ -4,7 +4,7 @@ import ModalNewChatComponent from './ModalNewChatComponent';
 
 import { useState, useEffect } from 'react';
 
-function ChatsNavbarComponent({ formEmail }) {
+function ChatsNavbarComponent({ formEmail, setChatElegido }) {
 
     const [modalOpened, setModalOpened] = useState(false);
     const [chatsUsuario, setChatsUsuario] = useState([]);
@@ -19,10 +19,17 @@ function ChatsNavbarComponent({ formEmail }) {
             })
     }, []);
 
+    const HandleClickChat = (chat_email) => {
+
+        let chat_email_temp = chat_email;
+        // MODIFICAR UN DADO USESTATE QUE VENGA DESDE LA 
+        setChatElegido(chat_email_temp)
+    }
+
 
     useEffect(() => {
         // chatsUsuario.reverse()
-        console.log(chatsUsuario);
+        // console.log(chatsUsuario);
     }, [chatsUsuario]);
 
     return (
@@ -32,7 +39,7 @@ function ChatsNavbarComponent({ formEmail }) {
 
             <div className='Seccion_chats'>
 
-                <ModalNewChatComponent opened={modalOpened} setOpened={setModalOpened} />
+                <ModalNewChatComponent opened={modalOpened} setOpened={setModalOpened} formEmail={formEmail} />
 
                 <Button
                     color="cyan"
@@ -47,7 +54,7 @@ function ChatsNavbarComponent({ formEmail }) {
                         return (
                             <UnstyledButton
                                 className='Boton_chat_individual'
-                                onClick={() => { console.log('Chat individual') }}
+                                onClick={() => { HandleClickChat(chat.email) }}
                             >
                                 <Group>
                                     <Avatar size={40} color="blue">{chat.name.split(" ")[0][0] + chat.name.split(" ")[1][0]}</Avatar>

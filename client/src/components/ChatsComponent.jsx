@@ -3,18 +3,21 @@ import React, { useEffect, useState } from "react";
 
 import MensajeComponent from './MensajeComponent';
 
-function ChatComponent({ formEmail }) {
+function ChatComponent({ formEmail, chatElegido }) {
 
-    const [datosUsuario, setDatosUsuario] = useState({});
+    const [conversacion, setConversacion] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/users/" + formEmail)
+        fetch("http://localhost:5000/api/chats/" + formEmail + "/" + chatElegido)
             .then(res => res.json())
             .then(data => {
-                setDatosUsuario(data);
-                console.log(datosUsuario);
+                setConversacion(data[0].messages);
             })
-    }, []);
+    }, [chatElegido]);
+
+    useEffect(() => {
+        console.log(conversacion);
+    }, [conversacion]);
 
     return (
 
@@ -23,17 +26,37 @@ function ChatComponent({ formEmail }) {
             <ScrollArea style={{ bottom: '10px' }} >
                 <div className='ChatsArea'>
 
-                    <MensajeComponent
-                        tipo='received'
-                        mensaje='Esto es una prueba de un mensaje siendo un reciever y quiero extender un poco mas el texto para ver el segundo.'
-                        fecha='12/24/2023'
-                    />
+                    {
+                        // chatElegido && conversacion.map((mensaje) => {
+                        //     return (
 
-                    <MensajeComponent
-                        tipo='sent'
-                        mensaje='Esto es una prueba de un mensaje siendo un sender.'
-                        fecha='12/24/2023'
-                    />
+                        //         <MensajeComponent>
+                        //             tipo = {mensaje.sender === formEmail ? 'sent' : 'received'}
+                        //             mensaje = {mensaje.message}
+                        //             fecha = {mensaje.createdAt}
+                        //         </MensajeComponent>
+
+                        //     )
+                        // })
+
+                        (chatElegido !== '' && conversacion !== undefined) && conversacion.map((mensaje) => {
+
+                            console.log('\n\n\nSender: ', mensaje.sender);
+                            console.log('Reciever: ', mensaje.receiver);
+                            console.log('El ternario es (Sender == EmailCuenta?): ', mensaje.sender === formEmail);
+
+                            return (
+
+                                <MensajeComponent
+                                    tipo={mensaje.sender === formEmail ? 'sent' : 'received'}
+                                    mensaje={mensaje.message}
+                                    fecha={mensaje.createdAt}
+                                />
+
+                            )
+                        })
+
+                    }
 
 
                 </div>

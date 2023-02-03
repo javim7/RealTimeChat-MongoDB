@@ -15,6 +15,12 @@ function App() {
 
   const [formEmail, setFormEmail] = useState(undefined);
 
+  const [chatElegido, setChatElegido] = useState('');
+
+  useEffect(() => {
+    // console.log(chatElegido);
+  }, [chatElegido]);
+
   return (
     <div>
 
@@ -23,8 +29,8 @@ function App() {
           ?
           <FormComponent setFormEmail={setFormEmail} />
           :
-          <AppShell padding="md" navbar={<NavbarComponent formEmail={formEmail} />}>
-            <ChatComponent formEmail={formEmail} />
+          <AppShell padding="md" navbar={<NavbarComponent formEmail={formEmail} setChatElegido={setChatElegido} />}>
+            <ChatComponent formEmail={formEmail} chatElegido={chatElegido} />
           </AppShell>
       }
 
