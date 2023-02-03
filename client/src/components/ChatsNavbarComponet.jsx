@@ -8,6 +8,8 @@ function ChatsNavbarComponent({ formEmail }) {
 
     const [modalOpened, setModalOpened] = useState(false);
     const [chatsUsuario, setChatsUsuario] = useState([]);
+    const [datosUsuario, setDatosUsuario] = useState('');
+    const [iniciales, setIniciales] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:5000/api/chats/" + formEmail)
@@ -18,7 +20,19 @@ function ChatsNavbarComponent({ formEmail }) {
             })
     }, []);
 
-    useEffect(() => { console.log(chatsUsuario); }, [chatsUsuario]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/users/" + formEmail)
+            .then(res => res.json())
+            .then(data => {
+                setDatosUsuario(data.name);
+                let nameArray = data.name.split(" ");
+                setIniciales(nameArray[0].charAt(0) + nameArray[1].charAt(0));
+                // console.log(iniciales);
+            })
+    }, []);
+
+    // useEffect(() => { console.log(chatsUsuario); }, [chatsUsuario]);
 
     return (
 
@@ -37,46 +51,57 @@ function ChatsNavbarComponent({ formEmail }) {
                 >
                     + Nuevo Chat
                 </Button>
-
-                <UnstyledButton
-                    className='Boton_chat_individual'
-                    onClick={() => { console.log('Chat individual') }}
-                >
-                    <Group>
-                        <Avatar size={40} color="blue">BH</Avatar>
-                        <div>
-                            <Text>Bob Handsome</Text>
-                            <Text size="xs" color="dimmed">bob@handsome.inc</Text>
-                        </div>
-                    </Group>
-                </UnstyledButton>
-
-                <UnstyledButton
-                    className='Boton_chat_individual'
-                    onClick={() => { console.log('Chat individual') }}
-                >
-                    <Group>
-                        <Avatar size={40} color="blue">BH</Avatar>
-                        <div>
-                            <Text>Bob Handsome</Text>
-                            <Text size="xs" color="dimmed">bob@handsome.inc</Text>
-                        </div>
-                    </Group>
-                </UnstyledButton>
                 {
+                    // chatsUsuario.map((chat) => {
+                    //     return (
+                    //         <UnstyledButton
+                    //             className='Boton_chat_individual'
+                    //             onClick={() => { console.log('Chat individual') }}
+                    //         >
+                    //             <Group>
+                    //                 <Avatar size={40} color="blue">BH</Avatar>
+                    //                 <div>
+                    //                     <Text>{chat.user2}</Text>
+                    //                     <Text size="xs" color="dimmed">{chat.user2}</Text>
+                    //                 </div>
+                    //             </Group>
+                    //         </UnstyledButton>
+                    //     )
+                    // })
+
                     chatsUsuario.map((chat) => {
                         return (
                             <UnstyledButton
                                 className='Boton_chat_individual'
                                 onClick={() => { console.log('Chat individual') }}
                             >
-                                <Group>
-                                    <Avatar size={40} color="blue">BH</Avatar>
+                                <Group className='grupo_chat'>
+                                    {
+                                        chat.user2 === formEmail
+                                            ?
+                                            <Avatar size={40} color="blue">BH</Avatar>
+                                            :
+                                            <Avatar size={40} color="blue">BH</Avatar>
+                                    }
+
                                     <div>
-                                        <Text>{chat.user2}</Text>
-                                        <Text size="xs" color="dimmed">{chat.user2}</Text>
+                                        {
+                                            chat.user2 === formEmail
+                                                ?
+                                                <Text fz="sm">{chat.user1}</Text>
+                                                :
+                                                <Text fz="sm">{chat.user2}</Text>
+                                        }
+                                        {
+                                            chat.user2 === formEmail
+                                                ?
+                                                <Text size="xs" color="dimmed">{chat.user1}</Text>
+                                                :
+                                                <Text size="xs" color="dimmed">{chat.user2}</Text>
+                                        }
                                     </div>
                                 </Group>
+
                             </UnstyledButton>
                         )
                     })
