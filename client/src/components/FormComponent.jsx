@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Text, TextInput } from '@mantine/core';
+import { Text, TextInput, Image } from '@mantine/core';
 import "../styles/form_style.css";
+import imgWhite from "../assets/quehubo_white.png";
 
 const FormComponent = ({ setFormEmail }) => {
-    const [form, setForm] = useState("register");
+    const [form, setForm] = useState("login");
 
     const switchForm = () => {
         setForm(form === "login" ? "register" : "login");
@@ -41,7 +42,7 @@ const FormComponent = ({ setFormEmail }) => {
 
     }
 
-    const HandleRegister = () => {
+    const HandleRegister = async () => {
         let databody = {
             "name": nombreRegister,
             "email": emailRegister,
@@ -71,45 +72,48 @@ const FormComponent = ({ setFormEmail }) => {
     }
 
     return (
-        <div className="form-container">
+        <div className="form-container" >
+            <div className="divImg" style={{ width: 500, marginLeft: '5vw', marginRight: '10vw' }}>
+                <Image src={imgWhite} alt="logoBlanco" />
+            </div>
             {form === "login" ? (
                 <div className="form">
-                    <h2>Login</h2>
+                    <h2>Inciar Sesion</h2>
                     <div className="form-group">
-                        <label className="label_form" htmlFor="email">Email:</label>
+                        <label className="label_form" htmlFor="email">Correo:</label>
                         <TextInput
                             className="input_form"
                             type="email"
                             id="email"
                             onChange={(evento) => { setEmailLogin(evento.target.value) }}
-                            error={errorCorreo ? "Credenciales incorrectos" : undefined}
+                            error={errorCorreo ? " " : undefined}
                         />
                     </div>
                     <div className="form-group">
-                        <label className="label_form" htmlFor="password">Password:</label>
+                        <label className="label_form" htmlFor="password">Clave:</label>
                         <TextInput
                             className="input_form"
                             type="password"
                             id="password"
                             onChange={(evento) => { setPasswordLogin(evento.target.value) }}
-                            error={errorCorreo ? " " : undefined}
+                            error={errorCorreo ? "Credenciales incorrectos" : undefined}
                         />
                     </div>
                     <button
                         className="boton_form"
                         type="submit"
                         onClick={() => { HandleLoggin() }}
-                    >Submit</button>
+                    >Iniciar Sesion</button>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Text c="black" style={{ marginRight: '10px' }} className="unlinks_forms">Don't have an account already? </Text>
-                        <Text c="blue" onClick={switchForm} className="links_forms">Create one</Text>
+                        <Text c="black" style={{ marginRight: '10px' }} className="unlinks_forms">Aun no tienes cuenta? </Text>
+                        <Text c="blue" onClick={switchForm} className="links_forms">Crear una</Text>
                     </div>
                 </div>
             ) : (
                 <div className="form">
-                    <h2>Register</h2>
+                    <h2>Registrarse</h2>
                     <div className="form-group">
-                        <label className="label_form" htmlFor="name">Nombre</label>
+                        <label className="label_form" htmlFor="name">Nombre Completo</label>
                         <TextInput
                             className="input_form"
                             type="text"
@@ -120,7 +124,7 @@ const FormComponent = ({ setFormEmail }) => {
                             })} />
                     </div>
                     <div className="form-group">
-                        <label className="label_form" htmlFor="email">Email:</label>
+                        <label className="label_form" htmlFor="email">Correo:</label>
                         <TextInput
                             className="input_form"
                             type="email"
@@ -131,7 +135,7 @@ const FormComponent = ({ setFormEmail }) => {
                             }} />
                     </div>
                     <div className="form-group">
-                        <label className="label_form" htmlFor="username">Username:</label>
+                        <label className="label_form" htmlFor="username">Nombre de Usuario:</label>
                         <TextInput
                             className="input_form"
                             type="text"
@@ -142,7 +146,7 @@ const FormComponent = ({ setFormEmail }) => {
                             }} />
                     </div>
                     <div className="form-group">
-                        <label className="label_form" htmlFor="password">Password:</label>
+                        <label className="label_form" htmlFor="password">Clave:</label>
                         <TextInput
                             className="input_form"
                             type="password"
@@ -156,10 +160,10 @@ const FormComponent = ({ setFormEmail }) => {
                         className="boton_form"
                         type="submit"
                         onClick={() => { HandleRegister() }}
-                    >Submit</button>
+                    >Registrarse</button>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Text c="black" style={{ marginRight: '10px' }} className="unlinks_forms">Already have an account? </Text>
-                        <Text c="blue" onClick={switchForm} className="links_forms">Login</Text>
+                        <Text c="black" style={{ marginRight: '10px' }} className="unlinks_forms">¿Ya tienes una cuenta? </Text>
+                        <Text c="blue" onClick={switchForm} className="links_forms">Iniciar Sesion</Text>
                     </div>
                 </div>
             )}

@@ -2,11 +2,24 @@ import { Navbar, Divider, AppShell, Avatar, Text, ScrollArea, UnstyledButton, Gr
 
 import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function FooterNavbarComponent() {
+function FooterNavbarComponent({ formEmail }) {
 
     const [openedMenu, setOpenedMenu] = useState(true);
+    const [datosUsuario, setDatosUsuario] = useState([]);
+    const [iniciales, setIniciales] = useState("");
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/users/" + formEmail)
+            .then(res => res.json())
+            .then(data => {
+                setDatosUsuario(data);
+                let nameArray = data.name.split(" ");
+                setIniciales(nameArray[0].charAt(0) + nameArray[1].charAt(0));
+                // console.log(iniciales);
+            })
+    }, []);
 
     return (
         <Navbar.Section>
@@ -18,10 +31,10 @@ function FooterNavbarComponent() {
                         onClick={() => { console.log('Perfil') }}
                     >
                         <Group >
-                            <Avatar color="cyan" size={40} radius="xl">NU</Avatar>
+                            <Avatar color="cyan" size={40} radius="xl">{iniciales}</Avatar>
                             <div>
-                                <Text fw={500}>Nombre Usuario</Text>
-                                <Text c="blue" fz="xs">correoelectronico@prueba.com</Text>
+                                <Text fw={500}>{datosUsuario.name}</Text>
+                                <Text c="blue" fz="xs">{datosUsuario.email}</Text>
                             </div>
                         </Group>
                     </UnstyledButton>

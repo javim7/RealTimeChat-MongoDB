@@ -17,7 +17,7 @@ function ModalNewChatComponent({ opened, setOpened }) {
             <Divider my="sm" variant="dashed" />
             <TextInput
                 placeholder="Escribe el correo de la persona"
-                label="Destino"
+                label="Destinatario"
             />
             <Divider my="sm" variant="dashed" />
             <TextInput

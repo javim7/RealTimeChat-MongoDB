@@ -6,7 +6,8 @@ const {
     getChats,
     getChat,
     deleteChat,
-    updateChat
+    updateChat,
+    getChatsSender
 } = require('../controllers/chatController')
 
 const router = express.Router();
@@ -15,7 +16,10 @@ const router = express.Router();
 router.get('/', getChats)
 
 //get a single Chat
-router.get('/:id', getChat)
+// router.get('/:id', getChat)
+
+//get all Chats where user1 or user2 is email
+router.get('/:email', getChatsSender)
 
 //post a new Chat
 router.post('/', createChat)

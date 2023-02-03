@@ -5,7 +5,7 @@ import FooterNavbarComponent from './FooterNavbarComponent';
 import ChatsNavbarComponent from './ChatsNavbarComponet';
 
 
-function NavbarComponent() {
+function NavbarComponent({ formEmail }) {
 
     return (
         <Navbar
@@ -16,11 +16,11 @@ function NavbarComponent() {
 
             <Divider my="sm" />
 
-            <ChatsNavbarComponent />
+            <ChatsNavbarComponent formEmail={formEmail} />
 
             <Divider my="sm" />
 
-            <FooterNavbarComponent />
+            <FooterNavbarComponent formEmail={formEmail} />
 
         </Navbar>
     )

@@ -2,11 +2,23 @@ import { Navbar, Divider, AppShell, Avatar, Text, ScrollArea, UnstyledButton, Gr
 
 import ModalNewChatComponent from './ModalNewChatComponent';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function ChatsNavbarComponent() {
+function ChatsNavbarComponent({ formEmail }) {
 
     const [modalOpened, setModalOpened] = useState(false);
+    const [chatsUsuario, setChatsUsuario] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/chats/" + formEmail)
+            .then(res => res.json())
+            .then(data => {
+                setChatsUsuario(data);
+                console.log(chatsUsuario);
+            })
+    }, []);
+
+    useEffect(() => { console.log(chatsUsuario); }, [chatsUsuario]);
 
     return (
 
@@ -51,6 +63,24 @@ function ChatsNavbarComponent() {
                         </div>
                     </Group>
                 </UnstyledButton>
+                {
+                    chatsUsuario.map((chat) => {
+                        return (
+                            <UnstyledButton
+                                className='Boton_chat_individual'
+                                onClick={() => { console.log('Chat individual') }}
+                            >
+                                <Group>
+                                    <Avatar size={40} color="blue">BH</Avatar>
+                                    <div>
+                                        <Text>{chat.user2}</Text>
+                                        <Text size="xs" color="dimmed">{chat.user2}</Text>
+                                    </div>
+                                </Group>
+                            </UnstyledButton>
+                        )
+                    })
+                }
 
             </div>
 

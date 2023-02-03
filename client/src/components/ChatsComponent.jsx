@@ -1,8 +1,21 @@
 import { Text, Paper, Divider, Input, ScrollArea } from '@mantine/core';
+import React, { useEffect, useState } from "react";
 
 import MensajeComponent from './MensajeComponent';
 
-function ChatComponent() {
+function ChatComponent({ formEmail }) {
+
+    const [datosUsuario, setDatosUsuario] = useState({});
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/users/" + formEmail)
+            .then(res => res.json())
+            .then(data => {
+                setDatosUsuario(data);
+                console.log(datosUsuario);
+            })
+    }, []);
+
     return (
 
         <div className='chats_component_area'>

@@ -32,7 +32,7 @@ const getUser = async (req, res) => {
     res.status(200).json(user)
 }
 
-//get single email for new chat
+//get single user by email
 const getUserEmail = async (req, res) => {
     const { email } = req.params
 
@@ -48,6 +48,7 @@ const getUserEmail = async (req, res) => {
     console.log('[userController.js] getEmail: ', user)
     res.status(200).json(user)
 }
+
 
 //create new user
 const createUser = async (req, res) => {
