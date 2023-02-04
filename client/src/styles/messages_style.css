@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .chats_component_area {
 
     height: 100%;
@@ -8,6 +10,54 @@
 
     margin: 0;
 
+}
+
+.chats_component_area2 {
+
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin: 0;
+
+    align-items: center;
+    justify-content: center;
+    bottom: 10px;
+
+}
+
+.imgChatArea {
+    border-radius: 15px;
+    width: 30vw;
+    /* border: 1px solid #ccc; */
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+}
+
+.parrafoTexto {
+    font-size: 1em;
+    margin: 4px;
+    padding-bottom: 0px;
+
+}
+
+.cifradoTxt {
+    font-size: 0.8em;
+    margin-top: 0px;
+    padding-top: 20px;
+    bottom: 10px;
 }
 
 .ChatsArea {
@@ -65,6 +115,11 @@
     /* align-items: center; */
     align-items: center;
 
+}
+
+.tooltip_disabled {
+
+    display: none;
 }
 
 .input_chat {

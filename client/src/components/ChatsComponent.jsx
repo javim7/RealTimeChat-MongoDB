@@ -1,7 +1,7 @@
-import { Text, Paper, Divider, Input, ScrollArea, Tooltip, Button, ActionIcon } from '@mantine/core';
+import { Text, Paper, Divider, Input, ScrollArea, Tooltip, Button, ActionIcon, Image } from '@mantine/core';
 import React, { useEffect, useState } from "react";
 import { Send } from 'tabler-icons-react';
-
+import imgChat from "../assets/chatAreaEmpty.png";
 import MensajeComponent from './MensajeComponent';
 
 function ChatComponent({ formEmail, chatElegido }) {
@@ -61,6 +61,9 @@ function ChatComponent({ formEmail, chatElegido }) {
     useEffect(() => {
         console.log(conversacion);
     }, [conversacion]);
+    useEffect(() => {
+        console.log(chatElegido);
+    }, [chatElegido]);
 
     useEffect(() => {
         console.log(chatIdActual);
@@ -69,66 +72,99 @@ function ChatComponent({ formEmail, chatElegido }) {
 
     return (
 
-        <div className='chats_component_area'>
+        <div>
+            {conversacion !== undefined ?
+                <div className='chats_component_area'>
 
-            <ScrollArea style={{ bottom: '10px' }} >
-                <div className='ChatsArea'>
+                    <ScrollArea style={{ bottom: '10px' }} >
+                        <div className='ChatsArea'>
 
-                    {
-                        // chatElegido && conversacion.map((mensaje) => {
-                        //     return (
+                            {
+                                // chatElegido && conversacion.map((mensaje) => {
+                                //     return (
 
-                        //         <MensajeComponent>
-                        //             tipo = {mensaje.sender === formEmail ? 'sent' : 'received'}
-                        //             mensaje = {mensaje.message}
-                        //             fecha = {mensaje.createdAt}
-                        //         </MensajeComponent>
+                                //         <MensajeComponent>
+                                //             tipo = {mensaje.sender === formEmail ? 'sent' : 'received'}
+                                //             mensaje = {mensaje.message}
+                                //             fecha = {mensaje.createdAt}
+                                //         </MensajeComponent>
 
-                        //     )
-                        // })
+                                //     )
+                                // })
 
-                        (chatElegido !== '' && conversacion !== undefined) && conversacion.map((mensaje) => {
+                                (chatElegido !== '' && conversacion !== undefined) && conversacion.map((mensaje) => {
 
-                            // console.log('\n\n\nSender: ', mensaje.sender);
-                            // console.log('Reciever: ', mensaje.receiver);
-                            // console.log('El ternario es (Sender == EmailCuenta?): ', mensaje.sender === formEmail);
+                                    // console.log('\n\n\nSender: ', mensaje.sender);
+                                    // console.log('Reciever: ', mensaje.receiver);
+                                    // console.log('El ternario es (Sender == EmailCuenta?): ', mensaje.sender === formEmail);
 
-                            return (
+                                    return (
 
-                                <MensajeComponent id={mensaje.message}
-                                    tipo={mensaje.sender === formEmail ? 'sent' : 'received'}
-                                    mensaje={mensaje.message}
-                                    fecha={mensaje.createdAt}
-                                />
+                                        <MensajeComponent id={mensaje.message}
+                                            tipo={mensaje.sender === formEmail ? 'sent' : 'received'}
+                                            mensaje={mensaje.message}
+                                            fecha={mensaje.createdAt}
+                                        />
 
-                            )
-                        })
+                                    )
+                                })
+
+                            }
+
+
+                        </div>
+                    </ScrollArea>
+
+
+                    {conversacion !== undefined ?
+
+                        <div className='input_chat_area'>
+                            <Input
+                                className='input_chat'
+                                placeholder="Escribe que hubo"
+                                value={mensaje_a_enviar}
+                                onChange={(e) => setMensaje_A_Enviar(e.target.value)}
+                            />
+                            {
+                                mensaje_a_enviar !== '' ?
+                                    <Tooltip
+                                        label="Enviar"
+                                        onClick={() => {
+                                            setMensaje_A_Enviar('')
+                                            postMessageToConversation()
+                                        }}
+                                    >
+                                        <ActionIcon variant="filled" color="blue" size="lg"><Send size={16} /></ActionIcon>
+                                    </Tooltip>
+                                    :
+                                    <Tooltip
+                                        label="Enviar"
+                                        className='tooltip_disabled'
+                                    >
+                                        <ActionIcon variant="filled" color="blue" size="lg"><Send size={16} /></ActionIcon>
+                                    </Tooltip>
+                            }
+
+                        </div>
+                        :
+                        <div className='input_chat_area2'></div>
 
                     }
 
-
+                </div >
+                :
+                <div className='chats_component_area2'>
+                    <div className='welcomeContainer'>
+                        <img src={imgChat} alt="chatImg" className='imgChatArea' />
+                    </div>
+                    <div className='textContainer'>
+                        <h1>QueHubo Live Chat</h1>
+                        <p className='parrafoTexto'>Envia y recibe mensajes sin necesidad de tener un telefono conectado.</p>
+                        <p className='parrafoTexto'>Usa QueHubo en hasta 4 dispositivos vinculados en 1 telefono a la vez.</p>
+                        <p className='cifradoTxt'>Cifrado de extremo a extremo</p>
+                    </div>
                 </div>
-            </ScrollArea>
-
-
-            <div className='input_chat_area'>
-                <Input
-                    className='input_chat'
-                    placeholder="Escribe que hubo"
-                    onChange={(e) => setMensaje_A_Enviar(e.target.value)}
-                />
-                <Tooltip
-                    label="Enviar"
-                    onClick={() => {
-                        setMensaje_A_Enviar(' ')
-                        postMessageToConversation()
-                    }}
-                >
-                    <ActionIcon variant="filled" color="blue" size="lg"><Send size={16} /></ActionIcon>
-                </Tooltip>
-
-            </div>
-
+            }
         </div >
 
 

@@ -15,7 +15,7 @@ function ChatsNavbarComponent({ formEmail, setChatElegido }) {
             .then(res => res.json())
             .then(data => {
                 setChatsUsuario(data);
-                chatsUsuario.reverse()
+                // chatsUsuario.reverse()
             })
     }, []);
 
@@ -50,7 +50,7 @@ function ChatsNavbarComponent({ formEmail, setChatElegido }) {
                     + Nuevo Chat
                 </Button>
                 {
-                    chatsUsuario.map((chat) => {
+                    chatsUsuario.slice().reverse().map((chat) => {
                         return (
                             <UnstyledButton
                                 className='Boton_chat_individual'
