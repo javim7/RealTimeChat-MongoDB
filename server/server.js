@@ -3,6 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
+const http = require('http');
+const { Server } = require('socket.io');
+
 //routes
 const userRoutes = require('./routes/users');
 const chatRoutes = require('./routes/chats');

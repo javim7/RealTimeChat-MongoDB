@@ -25,7 +25,7 @@ router.get('/:email', getUserEmail)
 router.post('/', createUser)
 
 //delete a new user
-router.delete('/:id', deleteUser)
+router.delete('/:email', deleteUser)
 
 //update a new user
 router.patch('/:id', updateUser)
