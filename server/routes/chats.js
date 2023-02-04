@@ -28,10 +28,14 @@ router.get('/:user/:email', getConversations)
 //post a new Chat
 router.post('/', createChat)
 
+// post a new message with a given chat id
+router.patch('/:id', updateChat)
+
+
 //delete a new Chat
 router.delete('/:id', deleteChat)
 
-//update a new Chat
-router.patch('/:id', updateChat)
+// //update a new Chat
+// router.patch('/:id', updateChat)
 
 module.exports = router;

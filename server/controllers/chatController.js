@@ -146,15 +146,35 @@ const deleteChat = async (req, res) => {
 
 //update a chat
 const updateChat = async (req, res) => {
-    const { id } = req.params
+    const { id, message_sender, message_reciever, message_content } = req.body
+
+    console.log('[chatController.js] updateChat');
+    console.log(req.body);
+
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'Invalid ID' })
     }
 
-    const chat = await Chat.findOneAndUpdate({ _id: id }, {
-        ...req.body
-    })
+    // const chat = await Chat.findOneAndUpdate({ _id: id }, {
+    //     ...req.body
+    // })
+
+    const chat = await Chat.updateOne(
+        { "_id": id },
+        {
+            $push: {
+                "messages":
+                {
+
+                    "sender": message_sender,
+                    "receiver": message_reciever,
+                    "message": message_content
+                }
+
+            }
+        }
+    )
 
     if (!chat) {
         return res.status(404).json({ error: 'chat not found' })
