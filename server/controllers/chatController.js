@@ -127,15 +127,12 @@ const createChat = async (req, res) => {
     }
 }
 
-//delete a chat
-const deleteChat = async (req, res) => {
-    const { id } = req.params
+//delete all chats given an email
+const deleteChatsByEmail = async (req, res) => {
+    const { email } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'Invalid ID' })
-    }
 
-    const chat = await Chat.findOneAndDelete({ _id: id })
+    const chat = await Chat.deleteMany({ $or: [{ user1: email }, { user2: email }] })
 
     if (!chat) {
         return res.status(404).json({ error: 'chat not found' })
@@ -187,7 +184,7 @@ module.exports = {
     createChat,
     getChats,
     getChat,
-    deleteChat,
+    deleteChatsByEmail,
     updateChat,
     getChatsSender,
     getConversations

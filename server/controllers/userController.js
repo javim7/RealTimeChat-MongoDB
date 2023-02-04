@@ -65,13 +65,9 @@ const createUser = async (req, res) => {
 
 //delete a user
 const deleteUser = async (req, res) => {
-    const { id } = req.params
+    const { email } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'Invalid ID' })
-    }
-
-    const user = await User.findOneAndDelete({ _id: id })
+    const user = await User.findOneAndDelete({ email: email })
 
     if (!user) {
         return res.status(404).json({ error: 'User not found' })

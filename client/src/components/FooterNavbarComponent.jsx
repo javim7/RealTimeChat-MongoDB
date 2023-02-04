@@ -1,14 +1,20 @@
-import { Navbar, Divider, AppShell, Avatar, Text, ScrollArea, UnstyledButton, Group, Image, Button, Menu } from '@mantine/core';
-
-import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons';
+import { Navbar, Divider, AppShell, Avatar, Text, ScrollArea, UnstyledButton, Group, Image, Button, Menu, Modal } from '@mantine/core';
 
 import { useState, useEffect } from 'react';
+
+import ModalUpdateProfileComponent from './ModalUpdateProfile';
 
 function FooterNavbarComponent({ formEmail }) {
 
     const [openedMenu, setOpenedMenu] = useState(true);
     const [datosUsuario, setDatosUsuario] = useState([]);
     const [iniciales, setIniciales] = useState("");
+
+    // * UseState encargado de abrir y cerrar el modal de actualizar perfil:
+
+    const [modalPerfilOpened, setModalPerfilOpened] = useState(false);
+
+
 
     useEffect(() => {
         fetch("http://localhost:5000/api/users/" + formEmail)
@@ -23,6 +29,8 @@ function FooterNavbarComponent({ formEmail }) {
 
     return (
         <Navbar.Section>
+
+            <ModalUpdateProfileComponent opened={modalPerfilOpened} setOpened={setModalPerfilOpened} datosUsuario={datosUsuario} />
 
             <Menu shadow="md" width={200} position="top" offset={15} withArrow>
                 <Menu.Target>
@@ -41,22 +49,18 @@ function FooterNavbarComponent({ formEmail }) {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                    <Menu.Label>Application</Menu.Label>
-                    <Menu.Item >Settings</Menu.Item>
-                    <Menu.Item >Messages</Menu.Item>
-                    <Menu.Item >Gallery</Menu.Item>
+                    <Menu.Label>Menu de usuario</Menu.Label>
                     <Menu.Item
-
-                        rightSection={<Text size="xs" color="dimmed">⌘K</Text>}
+                        onClick={() => { setModalPerfilOpened(true) }}
                     >
-                        Search
+                        Perfil
                     </Menu.Item>
 
                     <Menu.Divider />
 
-                    <Menu.Label>Danger zone</Menu.Label>
-                    <Menu.Item >Transfer my data</Menu.Item>
-                    <Menu.Item color="red" >Delete my account</Menu.Item>
+                    <Menu.Label>Zona de peligro</Menu.Label>
+                    <Menu.Item >Cerrar sesion</Menu.Item>
+                    <Menu.Item color="red" >Borrar mi cuenta</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
 

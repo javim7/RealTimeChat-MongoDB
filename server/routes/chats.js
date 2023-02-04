@@ -5,7 +5,7 @@ const {
     createChat,
     getChats,
     getChat,
-    deleteChat,
+    deleteChatsByEmail,
     updateChat,
     getChatsSender,
     getConversations,
@@ -32,8 +32,8 @@ router.post('/', createChat)
 router.patch('/:id', updateChat)
 
 
-//delete a new Chat
-router.delete('/:id', deleteChat)
+//delete a chat with the email
+router.delete('/:email', deleteChatsByEmail)
 
 // //update a new Chat
 // router.patch('/:id', updateChat)
