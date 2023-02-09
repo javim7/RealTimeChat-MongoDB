@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import ModalUpdateProfileComponent from './ModalUpdateProfile';
 
-function FooterNavbarComponent({ formEmail }) {
+function FooterNavbarComponent({ formEmail, setFormEmail }) {
 
     const [openedMenu, setOpenedMenu] = useState(true);
     const [datosUsuario, setDatosUsuario] = useState([]);
@@ -15,6 +15,26 @@ function FooterNavbarComponent({ formEmail }) {
     const [modalPerfilOpened, setModalPerfilOpened] = useState(false);
 
 
+    const handleDelete = async () => {
+
+        const deleteUserResponse = await fetch('http://localhost:5000/api/users/' + formEmail, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const deleteChatsResponse = await fetch('http://localhost:5000/api/chats/' + formEmail, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        setFormEmail(undefined);
+        const userJson = await deleteUserResponse.json();
+        const chatsJson = await deleteChatsResponse.json();
+
+        return { userJson, chatsJson };
+    }
 
     useEffect(() => {
         fetch("http://localhost:5000/api/users/" + formEmail)
@@ -53,14 +73,16 @@ function FooterNavbarComponent({ formEmail }) {
                     <Menu.Item
                         onClick={() => { setModalPerfilOpened(true) }}
                     >
-                        Perfil
+                        Cambiar Datos
                     </Menu.Item>
+                    <Menu.Item>Perfil</Menu.Item>
+                    <Menu.Item>Estadisticas</Menu.Item>
 
                     <Menu.Divider />
 
                     <Menu.Label>Zona de peligro</Menu.Label>
-                    <Menu.Item >Cerrar sesion</Menu.Item>
-                    <Menu.Item color="red" >Borrar mi cuenta</Menu.Item>
+                    <Menu.Item onClick={() => setFormEmail(undefined)} >Cerrar sesion</Menu.Item>
+                    <Menu.Item color="red" onClick={() => handleDelete()} >Borrar mi cuenta</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
 

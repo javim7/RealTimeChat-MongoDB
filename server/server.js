@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const express = require('express');
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
 const mongoose = require('mongoose');
 
 const http = require('http');
@@ -10,6 +12,7 @@ const { Server } = require('socket.io');
 const userRoutes = require('./routes/users');
 const chatRoutes = require('./routes/chats');
 const messageRoutes = require('./routes/messages');
+const fileRoutes = require('./routes/files');
 
 // ignorar warning:
 mongoose.set("strictQuery", false);
@@ -33,6 +36,7 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/chats', chatRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/files', fileRoutes)
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

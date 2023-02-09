@@ -29,8 +29,8 @@ function App() {
           ?
           <FormComponent setFormEmail={setFormEmail} />
           :
-          <AppShell padding="md" navbar={<NavbarComponent formEmail={formEmail} setChatElegido={setChatElegido} />}>
-            <ChatComponent formEmail={formEmail} chatElegido={chatElegido} />
+          <AppShell padding="md" navbar={<NavbarComponent formEmail={formEmail} setFormEmail={setFormEmail} setChatElegido={setChatElegido} />}>
+            <ChatComponent formEmail={formEmail} setFormEmail={setFormEmail} chatElegido={chatElegido} />
           </AppShell>
       }
 

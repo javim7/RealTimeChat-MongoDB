@@ -78,18 +78,27 @@ const deleteUser = async (req, res) => {
 
 //update a user
 const updateUser = async (req, res) => {
-    const { id } = req.params
+    const { email } = req.params
+    const { name, username, password } = req.body
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'Invalid ID' })
-    }
+    console.log('[chatController.js] updateUser');
+    console.log(req.params);
+    console.log(req.body);
 
-    const user = await User.findOneAndUpdate({ _id: id }, {
-        ...req.body
-    })
 
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' })
+    const user = await User.updateOne(
+        { email: email },
+        {
+            $set: {
+                name: name,
+                username: username,
+                password: password
+            }
+        }
+    )
+
+    if (email === undefined || name === undefined || username === undefined || password === undefined) {
+        return res.status(404).json({ error: 'fields not completed' })
     }
 
     res.status(200).json(user)

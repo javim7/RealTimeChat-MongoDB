@@ -28,6 +28,6 @@ router.post('/', createUser)
 router.delete('/:email', deleteUser)
 
 //update a new user
-router.patch('/:id', updateUser)
+router.patch('/:email', updateUser)
 
 module.exports = router;

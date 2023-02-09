@@ -5,7 +5,7 @@ import FooterNavbarComponent from './FooterNavbarComponent';
 import ChatsNavbarComponent from './ChatsNavbarComponet';
 
 
-function NavbarComponent({ formEmail, setChatElegido }) {
+function NavbarComponent({ formEmail, setChatElegido, setFormEmail }) {
 
     return (
         <Navbar
@@ -20,7 +20,7 @@ function NavbarComponent({ formEmail, setChatElegido }) {
 
             <Divider my="sm" />
 
-            <FooterNavbarComponent formEmail={formEmail} />
+            <FooterNavbarComponent formEmail={formEmail} setFormEmail={setFormEmail} />
 
         </Navbar>
     )
