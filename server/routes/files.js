@@ -11,22 +11,22 @@ const {
 
 const router = express.Router();
 
-// get all users
+// get all files
 router.get('/', getFiles)
 
-//get a single user login
+//get a single file login
 router.get('/:email/:password', getFile)
 
-//get a single user email
+//get a single file email
 router.get('/:email', getFile)
 
-//post a new user
+//post a new file
 router.post('/', createFile)
 
-//delete a new user
+//delete a new file
 router.delete('/:email', deleteFile)
 
-//update a new user
+//update a new file
 router.patch('/:email', updateFile)
 
 module.exports = router;

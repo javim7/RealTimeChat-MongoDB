@@ -1,4 +1,4 @@
-const Message = require('../models/fileModel');
+const File = require('../models/fileModel');
 const mongoose = require('mongoose');
 
 //get all messages
@@ -26,14 +26,16 @@ const getFile = async (req, res) => {
 
 //create new message
 const createFile = async (req, res) => {
-    const { sender, file } = req.body;
+    const { name, userId, fileData } = req.body;
+
+    console.log(req.body);
 
     //add to db
     try {
-        const file = await File.create({ sender, file })
+        const file = await File.create({ name, userId, fileData })
         res.status(200).json(file)
     } catch (error) {
-        res.status(400).json({ error: error.file })
+        res.status(400).json({ error: error.message })
     }
 }
 
