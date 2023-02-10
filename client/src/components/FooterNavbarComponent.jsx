@@ -64,7 +64,7 @@ function FooterNavbarComponent({ formEmail, setFormEmail }) {
 
             <CambiarFondoComponent opened={modalFondoOpened} setOpened={setModalFondoOpened} />
 
-            <MostrarEstadisticasComponent opened={modalEstadisticasOpened} setOpened={setModalEstadisticasOpened} />
+            <MostrarEstadisticasComponent opened={modalEstadisticasOpened} setOpened={setModalEstadisticasOpened} emailUsuario={datosUsuario.email} />
 
             <Menu shadow="md" width={200} position="top" offset={15} withArrow>
                 <Menu.Target>

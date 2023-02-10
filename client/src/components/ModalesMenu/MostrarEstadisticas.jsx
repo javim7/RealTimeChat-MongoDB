@@ -1,60 +1,112 @@
 import {
     Modal,
-    Image,
-    Button,
-    TextInput,
-    PasswordInput,
-    Table
+    Table,
+    Badge,
+    List,
+    Text,
+    Avatar
 } from '@mantine/core';
 
 import { useState, useEffect } from 'react';
 
-function MostrarEstadisticasComponent({ opened, setOpened }) {
+function MostrarEstadisticasComponent({ opened, setOpened, emailUsuario }) {
 
-    const elements = [
-        { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
-        { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
-        { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
-        { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
-        { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
-    ];
+    const [topUserContacts, setTopUserContacts] = useState([]);
+    const [topUserContactsRows, setTopUserContactsRows] = useState([]);
 
-    const rows = elements.map((element) => (
-        <tr key={element.name}>
-            <td>{element.position}</td>
-            <td>{element.name}</td>
-            <td>{element.symbol}</td>
-            <td>{element.mass}</td>
-        </tr>
-    ));
+    const [cantidadChatsActivos, setCantidadChatsActivos] = useState(0);
+    const [cantidadMensajesEnviados, setCantidadMensajesEnviados] = useState(0);
+    const [cantidadMensajesRecibidos, setCantidadMensajesRecibidos] = useState(0);
+
+    useEffect(() => {
+
+
+        const fetchDataTopUsers = async () => {
+            const response = await fetch('http://localhost:5000/api/chats/top/contacts/' + emailUsuario);
+            const data = await response.json();
+            setTopUserContacts(data);
+        };
+
+        fetchDataTopUsers();
+
+        const fetchDataActivos = async () => {
+            const response = await fetch('http://localhost:5000/api/chats/count/active/' + emailUsuario);
+            const data = await response.json();
+            setCantidadChatsActivos(data[0].count);
+        };
+
+        fetchDataActivos();
+
+        const fetchDataMensajesEnviados = async () => {
+            const response = await fetch('http://localhost:5000/api/chats/count/sent/' + emailUsuario);
+            const data = await response.json();
+            setCantidadMensajesEnviados(data[0].count);
+        };
+
+        fetchDataMensajesEnviados();
+
+
+
+        const fetchDataMensajesRecibidos = async () => {
+            const response = await fetch('http://localhost:5000/api/chats/count/received/' + emailUsuario);
+            const data = await response.json();
+            setCantidadMensajesRecibidos(data[0].count);
+        };
+
+        fetchDataMensajesRecibidos();
+
+    }, []);
+
+    useEffect(() => {
+        const rows = topUserContacts.map(contact => (
+            <tr key={contact._id}>
+                <td>{contact.otherUser}</td>
+                <td>{contact.messageCount}</td>
+            </tr>
+        ));
+        setTopUserContactsRows(rows);
+    }, [topUserContacts]);
+
+
 
     return (
         <Modal
             opened={opened}
             onClose={() => setOpened(false)}
         >
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Element position</th>
-                        <th>Element name</th>
-                        <th>Symbol</th>
-                        <th>Atomic mass</th>
-                    </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </Table>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Element position</th>
-                        <th>Element name</th>
-                        <th>Symbol</th>
-                        <th>Atomic mass</th>
-                    </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </Table>
+            <div>
+                <Badge color="cyan" size="lg" radius="sm" variant="filled" className='subtitulo_mostrar_estadisticas'>Top 5 contactos</Badge>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Cantidad de mensajes</th>
+                        </tr>
+                    </thead>
+                    <tbody>{topUserContactsRows}</tbody>
+                </Table>
+            </div>
+            <div>
+                <Badge color="cyan" size="lg" radius="sm" variant="filled" className='subtitulo_mostrar_estadisticas subtitulo_bajo'>Estadisticas generales</Badge>
+
+                <div className='item_list_estadistica'>
+                    <Avatar radius="xl" color="violet" size="sm">{cantidadChatsActivos}</Avatar>
+                    <Text c="black">Chats activos</Text>
+                </div>
+
+                <div className='item_list_estadistica'>
+                    <Avatar radius="xl" color="orange" size="sm">{cantidadMensajesRecibidos}</Avatar>
+                    <Text c="black">Mensajes recibidos</Text>
+
+                </div>
+
+                <div className='item_list_estadistica'>
+                    <Avatar radius="xl" color="green" size="sm">{cantidadMensajesEnviados}</Avatar>
+                    <Text c="black">Mensajes enviados</Text>
+                </div>
+
+
+            </div>
         </Modal>
     )
 }

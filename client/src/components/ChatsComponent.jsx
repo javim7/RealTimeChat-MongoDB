@@ -59,14 +59,14 @@ function ChatComponent({ formEmail, chatElegido }) {
 
 
     useEffect(() => {
-        console.log(conversacion);
+        // console.log(conversacion);
     }, [conversacion]);
     useEffect(() => {
-        console.log(chatElegido);
+        // console.log(chatElegido);
     }, [chatElegido]);
 
     useEffect(() => {
-        console.log(chatIdActual);
+        // console.log(chatIdActual);
     }, [chatIdActual]);
 
 

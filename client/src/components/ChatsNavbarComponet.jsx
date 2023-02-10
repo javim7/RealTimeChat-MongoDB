@@ -52,7 +52,7 @@ function ChatsNavbarComponent({ formEmail, setChatElegido }) {
                 {
                     chatsUsuario.slice().reverse().map((chat) => {
                         return (
-                            <UnstyledButton
+                            <UnstyledButton key={chat.email}
                                 className='Boton_chat_individual'
                                 onClick={() => { HandleClickChat(chat.email) }}
                             >

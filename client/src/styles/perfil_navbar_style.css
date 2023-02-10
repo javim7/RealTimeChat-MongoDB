@@ -7,3 +7,24 @@
 .CambiarFondoComponent_grupo {
     margin-top: 55px;
 }
+
+.item_list_estadistica {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    /* margin-left: 1vw; */
+}
+
+.item_list_estadistica>* {
+    margin-right: 10px;
+}
+
+.subtitulo_mostrar_estadisticas {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.subtitulo_bajo {
+    margin-top: 30px;
+    margin-bottom: 0px;
+}

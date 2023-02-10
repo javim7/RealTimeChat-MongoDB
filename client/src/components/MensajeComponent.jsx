@@ -11,7 +11,7 @@ function MensajeComponent(props) {
     }, [tipoMensaje]);
 
     return (
-        <Paper
+        <Paper key={Math.floor(Math.random() * 1000) + 1}
             shadow="xl"
             radius="lg"
             p="md"
