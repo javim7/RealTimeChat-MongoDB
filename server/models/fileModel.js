@@ -14,8 +14,8 @@ const fileSchema = new Schema({
         required: true
     },
     fileData: {
-        type: String,
-        required: true
+        data: Buffer,
+        contentType: String,
     }
 }, { timestamps: true })
 
