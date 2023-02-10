@@ -43,6 +43,75 @@ const getConversations = async (req, res) => {
     res.status(200).json(chats)
 }
 
+//get number of sent messages with a given email
+const getSentCount = async (req, res) => {
+    const { email } = req.params;
+    console.log("aqui estoy");
+    const chats = await Chat.aggregate(
+        [
+            {
+                $match: {
+                    "messages.sender": email
+                }
+            },
+            {
+                $unwind: "$messages"
+            },
+            {
+                $match: {
+                    "messages.sender": email
+                }
+            },
+            {
+                $group: {
+                    "_id": "$messages.sender",
+                    "count": {
+                        $sum: 1
+                    }
+                }
+            }
+        ]
+    )
+    if (!chats) {
+        return res.status(404).json({ error: 'email not found' })
+    }
+    res.status(200).json(chats)
+}
+
+//get number of recived messages with a given email
+const getReceivedCount = async (req, res) => {
+    const { email } = req.params;
+    console.log("aqui estoy");
+    const chats = await Chat.aggregate(
+        [
+            {
+                $match: {
+                    "messages.receiver": email
+                }
+            },
+            {
+                $unwind: "$messages"
+            },
+            {
+                $match: {
+                    "messages.receiver": email
+                }
+            },
+            {
+                $group: {
+                    "_id": "$messages.receiver",
+                    "count": {
+                        $sum: 1
+                    }
+                }
+            }
+        ]
+    )
+    if (!chats) {
+        return res.status(404).json({ error: 'email not found' })
+    }
+    res.status(200).json(chats)
+}
 
 //get allnavbar chats previous given an email
 const getChatsSender = async (req, res) => {
@@ -82,6 +151,34 @@ const getChatsSender = async (req, res) => {
     ]);
 
 
+    res.status(200).json(chats)
+}
+
+//get number of active chats
+const getActiveChats = async (req, res) => {
+    const { email } = req.params
+
+    const chats = await Chat.aggregate(
+        [
+            {
+                $match: {
+                    $or: [
+                        { user1: email },
+                        { user2: email }
+                    ]
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    count: { $sum: 1 }
+                }
+            }
+        ]
+    )
+    if (!chats) {
+        return res.status(404).json({ error: 'chat not found' })
+    }
     res.status(200).json(chats)
 }
 
@@ -180,6 +277,44 @@ const updateChat = async (req, res) => {
     res.status(200).json(chat)
 }
 
+//get top 5 contacts
+const getTop5Contacts = async (req, res) => {
+    const { email } = req.params;
+
+    const chats = await Chat.aggregate(
+        [
+            {
+                $match: {
+                    $or: [
+                        { user1: email },
+                        { user2: email }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    otherUser: {
+                        $cond: [
+                            { $eq: ["$user1", email] },
+                            "$user2",
+                            "$user1"
+                        ]
+                    },
+                    messageCount: { $size: "$messages" }
+                }
+            },
+            { $sort: { messageCount: -1 } },
+            { $limit: 5 }
+        ]
+    )
+    if (!chats) {
+        return res.status(404).json({ error: 'chat not found' })
+    }
+
+    res.status(200).json(chats)
+}
+
+
 module.exports = {
     createChat,
     getChats,
@@ -187,5 +322,9 @@ module.exports = {
     deleteChatsByEmail,
     updateChat,
     getChatsSender,
-    getConversations
+    getConversations,
+    getSentCount,
+    getReceivedCount,
+    getActiveChats,
+    getTop5Contacts
 }

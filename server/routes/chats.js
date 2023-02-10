@@ -9,6 +9,10 @@ const {
     updateChat,
     getChatsSender,
     getConversations,
+    getSentCount,
+    getReceivedCount,
+    getActiveChats,
+    getTop5Contacts
 } = require('../controllers/chatController')
 
 const router = express.Router();
@@ -21,6 +25,18 @@ router.get('/', getChats)
 
 //get all Chats where user1 or user2 is email
 router.get('/:email', getChatsSender)
+
+//get sent count for a user
+router.get('/count/sent/:email', getSentCount)
+
+//get received count for a user
+router.get('/count/received/:email', getReceivedCount)
+
+//get chats count for a user
+router.get('/count/active/:email', getActiveChats)
+
+//get top 5 contacts for a user
+router.get('/top/contacts/:email', getTop5Contacts)
 
 //get conversations between two users
 router.get('/:user/:email', getConversations)
