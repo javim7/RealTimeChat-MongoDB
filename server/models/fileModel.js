@@ -9,7 +9,8 @@ const fileSchema = new Schema({
         required: true
     },
     userId: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     fileData: {
