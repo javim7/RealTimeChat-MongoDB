@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 
 import ModalUpdateProfileComponent from './ModalUpdateProfile';
 
+import CambiarFondoComponent from './ModalesMenu/CambiarFondo'
+import MostrarEstadisticasComponent from './ModalesMenu/MostrarEstadisticas'
+
 function FooterNavbarComponent({ formEmail, setFormEmail }) {
 
-    const [openedMenu, setOpenedMenu] = useState(true);
     const [datosUsuario, setDatosUsuario] = useState([]);
     const [iniciales, setIniciales] = useState("");
 
@@ -14,6 +16,14 @@ function FooterNavbarComponent({ formEmail, setFormEmail }) {
 
     const [modalPerfilOpened, setModalPerfilOpened] = useState(false);
 
+
+    // * UseState encargado de abrir y cerrar el modal de cambiar fondo:
+
+    const [modalFondoOpened, setModalFondoOpened] = useState(false);
+
+    // * UseState encargado de abrir y cerrar el modal de mostrar estadisticas:
+
+    const [modalEstadisticasOpened, setModalEstadisticasOpened] = useState(false);
 
     const handleDelete = async () => {
 
@@ -52,11 +62,14 @@ function FooterNavbarComponent({ formEmail, setFormEmail }) {
 
             <ModalUpdateProfileComponent opened={modalPerfilOpened} setOpened={setModalPerfilOpened} datosUsuario={datosUsuario} />
 
+            <CambiarFondoComponent opened={modalFondoOpened} setOpened={setModalFondoOpened} />
+
+            <MostrarEstadisticasComponent opened={modalEstadisticasOpened} setOpened={setModalEstadisticasOpened} />
+
             <Menu shadow="md" width={200} position="top" offset={15} withArrow>
                 <Menu.Target>
                     <UnstyledButton
                         className='seccion_perfil'
-                        onClick={() => { console.log('Perfil') }}
                     >
                         <Group >
                             <Avatar color="cyan" size={40} radius="xl">{iniciales}</Avatar>
@@ -73,10 +86,18 @@ function FooterNavbarComponent({ formEmail, setFormEmail }) {
                     <Menu.Item
                         onClick={() => { setModalPerfilOpened(true) }}
                     >
-                        Cambiar Datos
+                        Perfil
                     </Menu.Item>
-                    <Menu.Item>Perfil</Menu.Item>
-                    <Menu.Item>Estadisticas</Menu.Item>
+                    <Menu.Item
+                        onClick={() => { setModalFondoOpened(true) }}
+                    >
+                        Cambiar fondo
+                    </Menu.Item>
+                    <Menu.Item
+                        onClick={() => { setModalEstadisticasOpened(true) }}
+                    >
+                        Estadisticas
+                    </Menu.Item>
 
                     <Menu.Divider />
 
