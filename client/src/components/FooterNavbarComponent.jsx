@@ -88,11 +88,11 @@ function FooterNavbarComponent({ formEmail, setFormEmail }) {
                     >
                         Perfil
                     </Menu.Item>
-                    <Menu.Item
+                    {/* <Menu.Item
                         onClick={() => { setModalFondoOpened(true) }}
                     >
                         Cambiar fondo
-                    </Menu.Item>
+                    </Menu.Item> */}
                     <Menu.Item
                         onClick={() => { setModalEstadisticasOpened(true) }}
                     >
